@@ -20,17 +20,20 @@ struct SliderScreen : View
             {
                 // Image A
                 ImageView(cg: session.image_a)
+                    .imageTransform(session)
                 
                 // Clip off Image B
                 ImageView(cg: session.image_b)
+                    .imageTransform(session)
                     .clipShape(Rectangle().offset(x: -(geo.size.width * (1 - split))))
-                
+
                 // Divider line
                 Rectangle()
                     .fill(Color.white)
                     .frame(width: 1)
                     .offset(x: geo.size.width * split - 1)
-
+                    .allowsHitTesting(false)
+                
                 // Handle
                 Circle()
                     .fill(Color.white)
@@ -47,12 +50,11 @@ struct SliderScreen : View
                     .gesture(
                         DragGesture()
                             .onChanged
-                            { value in
-                                let newFraction = value.location.x / geo.size.width
-                                split = min(max(newFraction, 0), 1)
-                            }
+                        { value in
+                            let newFraction = value.location.x / geo.size.width
+                            split = min(max(newFraction, 0), 1)
+                        }
                     )
-            
             }
         }
         .ignoresSafeArea()

@@ -12,6 +12,11 @@ import SwiftUI
 class Session {
     var image_a: CGImage?
     var image_b: CGImage?
+    
+    var scale : CGFloat = 1.0
+    var offset : CGSize = .zero
+    var last_scale : CGFloat = 1.0
+    var last_offset : CGSize = .zero
 
     private var security_scoped_a: URL?
     private var security_scoped_b: URL?
@@ -36,6 +41,14 @@ class Session {
         #else
         image_b = NSImage(contentsOf: url)?.cgImage(forProposedRect: nil, context: nil, hints: nil)
         #endif
+    }
+    
+    func ResetTransforms()
+    {
+        scale = 1.0
+        last_scale = 1.0
+        offset = .zero
+        last_offset = .zero
     }
 
     deinit {
