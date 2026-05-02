@@ -6,61 +6,75 @@
 //
 
 import SwiftUI
-import SwiftData
+import UniformTypeIdentifiers
 
 struct ContentView: View {
-    @Environment(\.modelContext) private var modelContext
-    @Query private var items: [Item]
+    @State private var session = Session()
+    @State private var is_importing_a = false;
+    @State private var is_importing_b = false;
+    
 
-    var body: some View {
-        NavigationSplitView {
-            List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
-                    } label: {
-                        Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
-                    }
+    var body: some View
+    {
+        NavigationStack()
+        {
+            TabView()
+            {
+                Tab("Side by Side", systemImage: "square.split.2x1")
+                {
+                    SideBySideScreen()
                 }
-                .onDelete(perform: deleteItems)
+                Tab("Slider", systemImage: "slider.horizontal.below.circle.lefthalf.filled")
+                {
+                    SliderScreen()
+                }
+                //            Tab("Opacity", systemImage: "slider.horizontal.below.circle.lefthalf.filled")
+                //            {
+                //                OpacityScreen()
+                //            }
+                //            Tab("Difference", systemImage: "slider.horizontal.below.circle.lefthalf.filled")
+                //            {
+                //                DifferenceScreen()
+                //            }
             }
-#if os(macOS)
-            .navigationSplitViewColumnWidth(min: 180, ideal: 200)
-#endif
             .toolbar {
+                ToolbarItem(placement:
+                {
 #if os(iOS)
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
+                    .topBarLeading
+#else
+                    .navigation
 #endif
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
+                }()) {
+                    Button(action: { is_importing_a = true }) {
+                        Label("Load Image A", systemImage: "photo.badge.plus")
+                    }
+                    .labelStyle(.titleAndIcon)
+                    .fileImporter(isPresented: $is_importing_a, allowedContentTypes: [.image]) { result in
+                        if case .success(let url) = result {
+                            session.LoadImageA(url)
+                        }
+                    }
+                }
+                ToolbarItem(placement:
+                {
+#if os(iOS)
+                    .topBarTrailing
+#else
+                    .primaryAction
+#endif
+                }()) {
+                    Button(action: { is_importing_b = true }) {
+                        Label("Load Image B", systemImage: "photo.badge.plus")
+                    }
+                    .labelStyle(.titleAndIcon)
+                    .fileImporter(isPresented: $is_importing_b, allowedContentTypes: [.image]) { result in
+                        if case .success(let url) = result {
+                            session.LoadImageB(url)
+                        }
                     }
                 }
             }
-        } detail: {
-            Text("Select an item")
         }
     }
-
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(timestamp: Date())
-            modelContext.insert(newItem)
-        }
-    }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            for index in offsets {
-                modelContext.delete(items[index])
-            }
-        }
-    }
-}
-
-#Preview {
-    ContentView()
-        .modelContainer(for: Item.self, inMemory: true)
 }
