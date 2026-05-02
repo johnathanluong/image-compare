@@ -22,11 +22,11 @@ struct ContentView: View {
             {
                 Tab("Side by Side", systemImage: "square.split.2x1")
                 {
-                    SideBySideScreen()
+                    SideBySideScreen(session: session)
                 }
                 Tab("Slider", systemImage: "slider.horizontal.below.circle.lefthalf.filled")
                 {
-                    SliderScreen()
+                    SliderScreen(session: session)
                 }
                 //            Tab("Opacity", systemImage: "slider.horizontal.below.circle.lefthalf.filled")
                 //            {
@@ -47,7 +47,7 @@ struct ContentView: View {
 #endif
                 }()) {
                     Button(action: { is_importing_a = true }) {
-                        Label("Load Image A", systemImage: "photo.badge.plus")
+                        Label("Select Image A", systemImage: "photo.badge.plus")
                     }
                     .labelStyle(.titleAndIcon)
                     .fileImporter(isPresented: $is_importing_a, allowedContentTypes: [.image]) { result in
@@ -65,7 +65,7 @@ struct ContentView: View {
 #endif
                 }()) {
                     Button(action: { is_importing_b = true }) {
-                        Label("Load Image B", systemImage: "photo.badge.plus")
+                        Label("Select Image B", systemImage: "photo.badge.plus")
                     }
                     .labelStyle(.titleAndIcon)
                     .fileImporter(isPresented: $is_importing_b, allowedContentTypes: [.image]) { result in

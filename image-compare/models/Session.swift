@@ -10,8 +10,8 @@ import SwiftUI
 
 @Observable
 class Session {
-    var image_a: URL?
-    var image_b: URL?
+    var image_a: CGImage?
+    var image_b: CGImage?
 
     private var security_scoped_a: URL?
     private var security_scoped_b: URL?
@@ -20,14 +20,22 @@ class Session {
         security_scoped_a?.stopAccessingSecurityScopedResource()
         guard url.startAccessingSecurityScopedResource() else { return }
         security_scoped_a = url
-        image_a = url
+        #if os(iOS)
+        image_a = UIImage(contentsOfFile: url.path())?.cgImage
+        #else
+        image_a = NSImage(contentsOf: url)?.cgImage(forProposedRect: nil, context: nil, hints: nil)
+        #endif
     }
 
     func LoadImageB(_ url: URL) {
         security_scoped_b?.stopAccessingSecurityScopedResource()
         guard url.startAccessingSecurityScopedResource() else { return }
         security_scoped_b = url
-        image_b = url
+        #if os(iOS)
+        image_b = UIImage(contentsOfFile: url.path())?.cgImage
+        #else
+        image_b = NSImage(contentsOf: url)?.cgImage(forProposedRect: nil, context: nil, hints: nil)
+        #endif
     }
 
     deinit {

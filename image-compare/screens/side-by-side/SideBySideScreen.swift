@@ -9,9 +9,17 @@ import SwiftUI
 
 struct SideBySideScreen : View
 {
+    @State var session : Session
     var body : some View
     {
-        let item = Item(timestamp: Date())
-        Text("Created at: \(item.timestamp.formatted())")
+        HStack(spacing: 0)
+        {
+            ImageView(cg: session.image_a)
+            Divider()
+            ImageView(cg: session.image_b)
+        }
+        .ignoresSafeArea()
     }
 }
+
+
