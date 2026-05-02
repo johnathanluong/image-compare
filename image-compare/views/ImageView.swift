@@ -10,6 +10,7 @@ import SwiftUI
 struct ImageView : View
 {
     var cg : CGImage?
+    var background : Color = .clear
     
     var body : some View
     {
@@ -19,14 +20,7 @@ struct ImageView : View
                 .resizable()
                 .scaledToFit()
                 .frame(maxWidth: .infinity)
-                .background
-                {
-                    #if os(iOS)
-                    Color(uiColor: .systemBackground)
-                    #else
-                    Color(nsColor: .windowBackgroundColor)
-                    #endif
-                }
+                .background(background)
         }
         else
         {

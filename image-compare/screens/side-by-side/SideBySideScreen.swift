@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SideBySideScreen : View
 {
-    @State var session : Session
+    var session : Session
     var body : some View
     {
         HStack(spacing: 0)

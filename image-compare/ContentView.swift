@@ -28,23 +28,23 @@ struct ContentView: View {
                 {
                     SliderScreen(session: session)
                 }
-                //            Tab("Opacity", systemImage: "slider.horizontal.below.circle.lefthalf.filled")
-                //            {
-                //                OpacityScreen()
-                //            }
-                //            Tab("Difference", systemImage: "slider.horizontal.below.circle.lefthalf.filled")
-                //            {
-                //                DifferenceScreen()
-                //            }
+                Tab("Opacity", systemImage: "circle.lefthalf.filled.righthalf.striped.horizontal.inverse")
+                {
+                    OpacityScreen(session: session)
+                }
+    //            Tab("Difference", systemImage: "slider.horizontal.below.circle.lefthalf.filled")
+    //            {
+    //                DifferenceScreen()
+    //            }
             }
             .toolbar {
                 ToolbarItem(placement:
                 {
-#if os(iOS)
+                    #if os(iOS)
                     .topBarLeading
-#else
+                    #else
                     .navigation
-#endif
+                    #endif
                 }()) {
                     Button(action: { is_importing_a = true }) {
                         Label("Select Image A", systemImage: "photo.badge.plus")
@@ -58,11 +58,11 @@ struct ContentView: View {
                 }
                 ToolbarItem(placement:
                 {
-#if os(iOS)
+                    #if os(iOS)
                     .topBarTrailing
-#else
+                    #else
                     .primaryAction
-#endif
+                    #endif
                 }()) {
                     Button(action: { is_importing_b = true }) {
                         Label("Select Image B", systemImage: "photo.badge.plus")

@@ -9,8 +9,14 @@ import SwiftUI
 
 struct SliderScreen : View
 {
-    @State var session : Session
     @State var split : CGFloat = 0.5
+    var session : Session
+    
+    #if os(iOS)
+    var background = Color(uiColor: .systemBackground)
+    #else
+    var background = Color(nsColor: .windowBackgroundColor)
+    #endif
     
     var body : some View
     {
@@ -18,12 +24,14 @@ struct SliderScreen : View
         { geo in
             ZStack(alignment: .leading)
             {
-                // Image A
-                ImageView(cg: session.image_a)
+                // Image A is background image
+                // Apply system background to these, otherwise clear backgrounds will cause
+                // images to overlap
+                ImageView(cg: session.image_a, background: background)
                     .imageTransform(session)
-                
+
                 // Clip off Image B
-                ImageView(cg: session.image_b)
+                ImageView(cg: session.image_b, background: background)
                     .imageTransform(session)
                     .clipShape(Rectangle().offset(x: -(geo.size.width * (1 - split))))
 
