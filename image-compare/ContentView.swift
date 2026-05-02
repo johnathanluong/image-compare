@@ -32,10 +32,10 @@ struct ContentView: View {
                 {
                     OpacityScreen(session: session)
                 }
-    //            Tab("Difference", systemImage: "slider.horizontal.below.circle.lefthalf.filled")
-    //            {
-    //                DifferenceScreen()
-    //            }
+                Tab("Difference", systemImage: "minus.square")
+                {
+                    DiffScreen(session: session)
+                }
             }
             .toolbar {
                 ToolbarItem(placement:

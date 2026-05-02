@@ -13,6 +13,7 @@ class Session {
     var image_a: CGImage?
     var image_b: CGImage?
     
+    static var min_scale : CGFloat = 0.25
     var scale : CGFloat = 1.0
     var offset : CGSize = .zero
     var last_scale : CGFloat = 1.0

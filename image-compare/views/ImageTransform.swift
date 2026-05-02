@@ -20,7 +20,7 @@ struct ImageTransform : ViewModifier {
                     // Pinch to zoom
                     MagnifyGesture()
                         .onChanged { value in
-                            session.scale = session.last_scale * value.magnification
+                            session.scale = max(Session.min_scale, session.last_scale * value.magnification)
                         }
                         .onEnded { _ in
                             session.last_scale = session.scale
