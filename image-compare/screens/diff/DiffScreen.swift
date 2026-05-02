@@ -77,13 +77,13 @@ struct DiffScreen: View {
         }
         
         Task.detached(priority: .userInitiated) {
-            let result = await computeDiff(a: a, b: b, mode: mode)
+            let result = await computeDiff(a: a, b: b, mode: mode, threshold: threshold)
             await MainActor.run { diff_image = result }
         }
     }
 }
 
-private func computeDiff(a: CGImage, b: CGImage, mode: DiffMode) -> CGImage? {
+private func computeDiff(a: CGImage, b: CGImage, mode: DiffMode, threshold: Double) -> CGImage? {
     let ci_a = CIImage(cgImage: a)
     let ci_b = CIImage(cgImage: b)
     let context = CIContext()
