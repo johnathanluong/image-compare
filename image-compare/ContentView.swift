@@ -36,6 +36,10 @@ struct ContentView: View {
                 {
                     DiffScreen(session: session)
                 }
+                Tab("Flicker", systemImage: "lightswitch.off")
+                {
+                    FlickerScreen(session: session)
+                }
             }
             .toolbar {
                 ToolbarItem(placement:
