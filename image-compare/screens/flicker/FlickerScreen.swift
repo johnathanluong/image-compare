@@ -25,6 +25,7 @@ struct FlickerScreen : View
                 ImageView(cg: showing_img_a ? session.image_a : session.image_b)
                     .imageTransform(session)
             }
+            .frame(maxHeight: .infinity)
             HStack
             {
                 Button(action: TogglePlayback)
@@ -49,7 +50,11 @@ struct FlickerScreen : View
                 StartFlicker()
             }
         }
-        .onDisappear(perform: StopFlicker)
+        .onDisappear()
+        {
+            StopFlicker()
+            is_playing = false
+        }
     }
     
     private func TogglePlayback()

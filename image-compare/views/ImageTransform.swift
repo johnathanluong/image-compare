@@ -26,7 +26,7 @@ struct ImageTransform : ViewModifier {
                             session.last_scale = session.scale
                         },
                     // Drag to move picture around
-                    DragGesture()
+                    DragGesture(minimumDistance: 10)
                         .onChanged { value in
                             session.offset = CGSize(
                                 width: session.last_offset.width + value.translation.width,

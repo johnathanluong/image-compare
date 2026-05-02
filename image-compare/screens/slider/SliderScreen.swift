@@ -39,13 +39,13 @@ struct SliderScreen : View
                 Rectangle()
                     .fill(Color.white)
                     .frame(width: 1)
-                    .offset(x: geo.size.width * split - 1)
+                    .offset(x: geo.size.width * split)
                     .allowsHitTesting(false)
                 
                 // Handle
                 Circle()
                     .fill(Color.white)
-                    .frame(width: 20, height: 20)
+                    .frame(width: 26, height: 26)
                     .overlay {
                         HStack(spacing: 2) {
                             Image(systemName: "chevron.left")
@@ -54,13 +54,13 @@ struct SliderScreen : View
                         .font(.caption.bold())
                         .foregroundStyle(.black)
                     }
-                    .offset(x: geo.size.width * split - 10)
-                    .gesture(
+                    .offset(x: geo.size.width * split - 13)
+                    .simultaneousGesture(
                         DragGesture()
                             .onChanged
                         { value in
-                            let newFraction = value.location.x / geo.size.width
-                            split = min(max(newFraction, 0), 1)
+                            let new_pos = value.location.x / geo.size.width
+                            split = min(max(new_pos, 0), 1)
                         }
                     )
             }
